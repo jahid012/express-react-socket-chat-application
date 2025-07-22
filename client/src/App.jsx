@@ -1,7 +1,7 @@
 import Navbar from './components/Navbar';
 import { Route, Routes, Navigate } from 'react-router';
 import HomePage from './pages/HomePage';
-import SignUpPage from './pages/SignUpPage';
+import SignUpPage from './pages/SignupPage';
 import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
@@ -33,8 +33,8 @@ function App() {
     <Navbar />
     <Routes>
       <Route path="/" element={ user ? <HomePage />:<Navigate to="/login" />} />
-      <Route path="/signup" element={!user ? <SignUpPage />:<Navigate to="/login" />} />
-      <Route path="/signin" element={!user ? <LoginPage />:<Navigate to="/login" />} />
+      <Route path="/signup" element={!user ? <SignUpPage />:<Navigate to="/" />} />
+      <Route path="/login" element={!user ? <LoginPage />:<Navigate to="/" />} />
       <Route path="/settings" element={ <SettingsPage />} />
       <Route path="/profile" element={user ? <ProfilePage />:<Navigate to="/login" />} />
     </Routes>

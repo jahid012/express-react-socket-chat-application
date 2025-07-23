@@ -108,13 +108,13 @@ export const logout = (req, res) => {
 export const updateProfile = async (req, res) => {
   
   try{
-    const {profilePicture} = req.body;
+    const {profilePic} = req.body;
     const userId = req.user._id;
-    if (!profilePicture) {
+    if (!profilePic) {
       return res.status(400).json({ message: "Profile picture is required" });
     }
 
-    await cloudinary.uploader.upload(profilePicture, {
+    await cloudinary.uploader.upload(profilePic, {
       folder: "profile_pictures",
     }, async (error, result) => {
       if (error) {
@@ -123,7 +123,7 @@ export const updateProfile = async (req, res) => {
 
       const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { profilePicture: result.secure_url },
+        { profilePic: result.secure_url },
         { new: true }
       );
 
@@ -137,7 +137,7 @@ export const updateProfile = async (req, res) => {
           id: updatedUser._id,
           fullName: updatedUser.fullName,
           email: updatedUser.email,
-          profilePicture: updatedUser.profilePicture,
+          profilePic: updatedUser.profilePic,
         },
       });
     });
@@ -161,7 +161,8 @@ export const checkAuth = (req, res) => {
         id: user._id,
         fullName: user.fullName,
         email: user.email,
-        profilePicture: user.profilePicture,
+        profilePic: user.profilePic,
+        createdAt: user.createdAt,
       },
     });
   } catch (error) {

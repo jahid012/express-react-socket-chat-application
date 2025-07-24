@@ -23,8 +23,9 @@ function ProfilePage() {
   
   return (
     <>
-    <div className="pt-25"></div>
-    <div className="w-96 mx-auto ">
+   
+    <div className="w-96 min-h-screen mx-auto "> 
+      <div className="pt-30"></div>
       <div className="card pt-5  shadow-xl shadow-xl">
         <div className="card-body p-4 py-8">
           <div className="text-center">

@@ -7,11 +7,11 @@ import Toaster from 'react-hot-toast';
 import { ToastContainer, toast } from 'react-toastify';
 
 createRoot(document.getElementById('root')).render(
-  <>
+  <StrictMode>
   <ToastContainer />
   <BrowserRouter>
       
     <App />
   </BrowserRouter>
-  </>,
+  </StrictMode>,
 )

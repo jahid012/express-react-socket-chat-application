@@ -1,5 +1,7 @@
 import Message from "../models/message.model.js";
 import User from '../models/user.model.js';
+import cloudinary from "../lib/cloudinary.js";
+import { getReceiverSocketId, io } from "../lib/socket.js";
 
 export const GetAllMessagedUser = async (req, res) => {
   try {
@@ -30,9 +32,6 @@ export const getMessagesByReceiverId = async (req, res) => {
         { senderId: senderId, receiverId: receiverId },
       ],
     })
-      .populate("sender", "fullName email")
-      .sort({ createdAt: -1 });
-
     if (!messages) {
       return res.status(404).json({ message: "No messages found" });
     }
@@ -77,6 +76,13 @@ export const sendMessage = async (req, res) => {
 
     res.status(201).json(newMessage);
     // realtime functionaliy will be implemented later
+
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
+
+
   } catch (error) {
     console.error("Error sending message:", error);
     res.status(500).json({ message: "Internal server error" });
